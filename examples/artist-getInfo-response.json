@@ -1,0 +1,81 @@
+{
+  "artist": {
+    "name": "Radiohead",
+    "mbid": "a74b1b7f-71a5-4011-9441-d0b5e4122711",
+    "url": "https://www.last.fm/music/Radiohead",
+    "image": [
+      {
+        "#text": "https://lastfm.freetls.fastly.net/i/u/34s/radiohead.jpg",
+        "size": "small"
+      },
+      {
+        "#text": "https://lastfm.freetls.fastly.net/i/u/64s/radiohead.jpg",
+        "size": "medium"
+      },
+      {
+        "#text": "https://lastfm.freetls.fastly.net/i/u/174s/radiohead.jpg",
+        "size": "large"
+      },
+      {
+        "#text": "https://lastfm.freetls.fastly.net/i/u/300x300/radiohead.jpg",
+        "size": "extralarge"
+      },
+      {
+        "#text": "https://lastfm.freetls.fastly.net/i/u/500x500/radiohead.jpg",
+        "size": "mega"
+      }
+    ],
+    "streamable": "0",
+    "ontour": "0",
+    "stats": {
+      "listeners": "4821039",
+      "playcount": "432156789",
+      "userplaycount": "0"
+    },
+    "similar": {
+      "artist": [
+        {
+          "name": "Thom Yorke",
+          "url": "https://www.last.fm/music/Thom+Yorke",
+          "image": [
+            {
+              "#text": "https://lastfm.freetls.fastly.net/i/u/34s/thomyorke.jpg",
+              "size": "small"
+            }
+          ]
+        },
+        {
+          "name": "Portishead",
+          "url": "https://www.last.fm/music/Portishead",
+          "image": [
+            {
+              "#text": "https://lastfm.freetls.fastly.net/i/u/34s/portishead.jpg",
+              "size": "small"
+            }
+          ]
+        }
+      ]
+    },
+    "tags": {
+      "tag": [
+        {
+          "name": "alternative rock",
+          "url": "https://www.last.fm/tag/alternative+rock"
+        },
+        {
+          "name": "electronic",
+          "url": "https://www.last.fm/tag/electronic"
+        },
+        {
+          "name": "rock",
+          "url": "https://www.last.fm/tag/rock"
+        }
+      ]
+    },
+    "bio": {
+      "published": "26 Jan 2009, 23:33",
+      "summary": "Radiohead are a British rock band from Abingdon, Oxfordshire, England, formed in 1985. The band consists of Thom Yorke (vocals, guitar, piano), Jonny Greenwood (guitar, keyboards, other instruments), Ed O'Brien (guitar, backing vocals), Colin Greenwood (bass) and Philip Selway (drums, percussion). <a href=\"https://www.last.fm/music/Radiohead\">Read more on Last.fm</a>",
+      "content": "Radiohead are a British rock band from Abingdon, Oxfordshire, England, formed in 1985..."
+    }
+  }
+}

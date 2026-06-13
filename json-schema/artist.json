@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/last-fm/main/json-schema/artist.json",
+  "title": "Artist",
+  "description": "A music artist on Last.fm with metadata, stats, biography, similar artists, and tags.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The artist's name."
+    },
+    "mbid": {
+      "type": "string",
+      "description": "The MusicBrainz identifier for the artist."
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "The Last.fm URL for the artist."
+    },
+    "image": {
+      "type": "array",
+      "description": "Artist images in various sizes.",
+      "items": {
+        "$ref": "#/$defs/Image"
+      }
+    },
+    "streamable": {
+      "type": "string",
+      "description": "Whether the artist is streamable on Last.fm."
+    },
+    "ontour": {
+      "type": "string",
+      "description": "Whether the artist is currently on tour."
+    },
+    "stats": {
+      "type": "object",
+      "description": "Listener and playcount statistics.",
+      "properties": {
+        "listeners": {
+          "type": "string",
+          "description": "Total number of unique listeners."
+        },
+        "playcount": {
+          "type": "string",
+          "description": "Total number of plays."
+        },
+        "userplaycount": {
+          "type": "string",
+          "description": "Plays by the requesting user (if username parameter supplied)."
+        }
+      }
+    },
+    "similar": {
+      "type": "object",
+      "properties": {
+        "artist": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SimilarArtist"
+          }
+        }
+      }
+    },
+    "tags": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Tag"
+          }
+        }
+      }
+    },
+    "bio": {
+      "type": "object",
+      "description": "Artist biography information.",
+      "properties": {
+        "published": {
+          "type": "string",
+          "description": "Date the biography was published."
+        },
+        "summary": {
+          "type": "string",
+          "description": "Short summary of the biography."
+        },
+        "content": {
+          "type": "string",
+          "description": "Full biography content."
+        }
+      }
+    }
+  },
+  "required": ["name", "url"],
+  "$defs": {
+    "Image": {
+      "type": "object",
+      "properties": {
+        "#text": {
+          "type": "string",
+          "format": "uri",
+          "description": "The image URL."
+        },
+        "size": {
+          "type": "string",
+          "enum": ["small", "medium", "large", "extralarge", "mega"],
+          "description": "The image size."
+        }
+      }
+    },
+    "Tag": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": ["name"]
+    },
+    "SimilarArtist": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "mbid": {
+          "type": "string"
+        },
+        "match": {
+          "type": "string",
+          "description": "Similarity score between 0 and 1."
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "image": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Image"
+          }
+        }
+      },
+      "required": ["name"]
+    }
+  }
+}

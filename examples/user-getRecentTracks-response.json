@@ -1,0 +1,48 @@
+{
+  "recenttracks": {
+    "@attr": {
+      "user": "exampleuser",
+      "page": "1",
+      "perPage": "50",
+      "totalPages": "12",
+      "total": "578"
+    },
+    "track": [
+      {
+        "artist": {
+          "#text": "Radiohead",
+          "mbid": "a74b1b7f-71a5-4011-9441-d0b5e4122711"
+        },
+        "name": "Karma Police",
+        "mbid": "d5e4b4c0-a2c6-4c41-a8c7-6f4e68d5af57",
+        "album": {
+          "#text": "OK Computer",
+          "mbid": "9f7a4c2d-2a3c-4b71-a512-8a3c6be07a44"
+        },
+        "url": "https://www.last.fm/music/Radiohead/_/Karma+Police",
+        "streamable": "0",
+        "@attr": {
+          "nowplaying": "true"
+        }
+      },
+      {
+        "artist": {
+          "#text": "Portishead",
+          "mbid": "8f6bd1e4-fbe1-45d6-8f00-f9f14d7b5e34"
+        },
+        "name": "Glory Box",
+        "mbid": "a8c4b7f9-0931-4d2c-9b3a-5e7c8d1f0234",
+        "album": {
+          "#text": "Dummy",
+          "mbid": "b2d4e891-2c4a-4d71-9102-6b3f4a5c7e82"
+        },
+        "url": "https://www.last.fm/music/Portishead/_/Glory+Box",
+        "date": {
+          "uts": "1718150100",
+          "#text": "11 Jun 2024, 20:35"
+        },
+        "streamable": "0"
+      }
+    ]
+  }
+}

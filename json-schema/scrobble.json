@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/last-fm/main/json-schema/scrobble.json",
+  "title": "Scrobble",
+  "description": "A scrobble submission representing a single track play sent to Last.fm.",
+  "type": "object",
+  "properties": {
+    "artist": {
+      "type": "string",
+      "description": "The artist name."
+    },
+    "track": {
+      "type": "string",
+      "description": "The track name."
+    },
+    "timestamp": {
+      "type": "integer",
+      "description": "The time the track started playing, in UNIX timestamp format."
+    },
+    "album": {
+      "type": "string",
+      "description": "The album name (optional)."
+    },
+    "albumArtist": {
+      "type": "string",
+      "description": "The album artist when different from the track artist."
+    },
+    "trackNumber": {
+      "type": "integer",
+      "description": "The track number on the album."
+    },
+    "mbid": {
+      "type": "string",
+      "description": "The MusicBrainz Track ID."
+    },
+    "duration": {
+      "type": "integer",
+      "description": "The track length in seconds."
+    },
+    "chosenByUser": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "1 if the user chose this track, 0 if chosen by algorithm or radio."
+    },
+    "streamId": {
+      "type": "string",
+      "description": "The stream id for this track received from a radio service."
+    }
+  },
+  "required": ["artist", "track", "timestamp"]
+}

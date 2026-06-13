@@ -1,0 +1,16 @@
+{
+  "method": "track.scrobble",
+  "artist[0]": "Radiohead",
+  "track[0]": "Karma Police",
+  "timestamp[0]": 1718150400,
+  "album[0]": "OK Computer",
+  "albumArtist[0]": "Radiohead",
+  "trackNumber[0]": 8,
+  "mbid[0]": "d5e4b4c0-a2c6-4c41-a8c7-6f4e68d5af57",
+  "duration[0]": 264,
+  "chosenByUser[0]": 1,
+  "api_key": "YOUR_API_KEY",
+  "api_sig": "YOUR_API_SIGNATURE",
+  "sk": "YOUR_SESSION_KEY",
+  "format": "json"
+}

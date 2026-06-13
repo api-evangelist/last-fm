@@ -17,6 +17,7 @@ description: >-
   top charts by geography or tag, explore similar artists and tracks, and access user profile data.
 created: '2026-06-13'
 modified: '2026-06-13'
+
 specificationVersion: '0.19'
 apis:
   - aid: last-fm:last-fm-api
@@ -40,6 +41,24 @@ apis:
         type: Authentication
       - url: https://www.last.fm/api/tos
         type: TermsOfService
+      - url: openapi/last-fm-openapi.yml
+        type: OpenAPI
+      - url: json-ld/last-fm-context.jsonld
+        type: JSONLDContext
+      - url: json-schema/artist.json
+        type: JSONSchema
+      - url: json-schema/track.json
+        type: JSONSchema
+      - url: json-schema/scrobble.json
+        type: JSONSchema
+      - url: vocabulary/last-fm-vocabulary.yml
+        type: Vocabulary
+      - url: examples/artist-getInfo-response.json
+        type: Example
+      - url: examples/track-scrobble-request.json
+        type: Example
+      - url: examples/user-getRecentTracks-response.json
+        type: Example
     description: >-
       The Last.fm API provides access to the Last.fm music platform, enabling developers to
       retrieve music metadata for artists, albums, and tracks; read and write user scrobble data;

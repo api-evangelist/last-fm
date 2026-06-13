@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/last-fm/main/json-schema/track.json",
+  "title": "Track",
+  "description": "A music track on Last.fm with metadata, playcount, and associated album/artist info.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The track name."
+    },
+    "mbid": {
+      "type": "string",
+      "description": "The MusicBrainz ID for the track."
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "The Last.fm URL for the track."
+    },
+    "duration": {
+      "type": "string",
+      "description": "Track duration in seconds."
+    },
+    "streamable": {
+      "type": "object",
+      "properties": {
+        "#text": {
+          "type": "string"
+        },
+        "fulltrack": {
+          "type": "string"
+        }
+      }
+    },
+    "listeners": {
+      "type": "string",
+      "description": "Number of unique listeners."
+    },
+    "playcount": {
+      "type": "string",
+      "description": "Total number of plays."
+    },
+    "userplaycount": {
+      "type": "string",
+      "description": "Plays by the requesting user (if username parameter supplied)."
+    },
+    "userloved": {
+      "type": "string",
+      "description": "Whether the requesting user has loved this track (0 or 1)."
+    },
+    "artist": {
+      "$ref": "#/$defs/Artist"
+    },
+    "album": {
+      "type": "object",
+      "description": "The album this track appears on.",
+      "properties": {
+        "artist": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "mbid": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "image": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Image"
+          }
+        },
+        "@attr": {
+          "type": "object",
+          "properties": {
+            "position": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "toptags": {
+      "type": "object",
+      "properties": {
+        "tag": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Tag"
+          }
+        }
+      }
+    },
+    "wiki": {
+      "type": "object",
+      "properties": {
+        "published": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": ["name"],
+  "$defs": {
+    "Artist": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "mbid": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": ["name"]
+    },
+    "Image": {
+      "type": "object",
+      "properties": {
+        "#text": {
+          "type": "string",
+          "format": "uri"
+        },
+        "size": {
+          "type": "string",
+          "enum": ["small", "medium", "large", "extralarge", "mega"]
+        }
+      }
+    },
+    "Tag": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": ["name"]
+    }
+  }
+}

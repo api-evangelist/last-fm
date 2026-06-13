@@ -1,0 +1,75 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "lastfm": "https://www.last.fm/api/schema/",
+    "aid": "lastfm:aid",
+    "scrobble": "lastfm:scrobble",
+    "mbid": "lastfm:mbid",
+    "playcount": "lastfm:playcount",
+    "listeners": "lastfm:listeners",
+    "nowplaying": "lastfm:nowplaying",
+    "loved": "lastfm:loved",
+    "autocorrect": "lastfm:autocorrect",
+    "sk": "lastfm:sessionKey",
+    "api_key": "lastfm:apiKey",
+    "api_sig": "lastfm:apiSignature",
+    "Artist": "MusicGroup",
+    "Track": "MusicRecording",
+    "Album": "MusicAlbum",
+    "Tag": "DefinedTerm",
+    "User": "Person",
+    "bio": "description",
+    "url": "@id",
+    "name": "name",
+    "image": "image",
+    "duration": "duration",
+    "country": "addressCountry",
+    "lang": "inLanguage",
+    "period": {
+      "@id": "lastfm:period",
+      "@type": "@vocab"
+    },
+    "topArtists": "lastfm:topArtists",
+    "topTracks": "lastfm:topTracks",
+    "topAlbums": "lastfm:topAlbums",
+    "recentTracks": "lastfm:recentTracks",
+    "lovedTracks": "lastfm:lovedTracks",
+    "similarArtists": "lastfm:similarArtists",
+    "similarTracks": "lastfm:similarTracks",
+    "weeklyChart": "lastfm:weeklyChart",
+    "chart": "lastfm:chart"
+  },
+  "@type": "WebAPI",
+  "@id": "https://ws.audioscrobbler.com/2.0/",
+  "name": "Last.fm API",
+  "description": "The Last.fm API provides access to music metadata, scrobbling, charts, and user listening data.",
+  "url": "https://www.last.fm/api",
+  "provider": {
+    "@type": "Organization",
+    "name": "Last.fm",
+    "url": "https://www.last.fm/",
+    "sameAs": [
+      "https://twitter.com/lastfm",
+      "https://www.linkedin.com/company/last-fm",
+      "https://github.com/lastfm"
+    ]
+  },
+  "documentation": "https://www.last.fm/api/intro",
+  "termsOfService": "https://www.last.fm/api/tos",
+  "potentialAction": [
+    {
+      "@type": "SearchAction",
+      "name": "Search Artists",
+      "description": "Search for artists by name",
+      "target": "https://ws.audioscrobbler.com/2.0/?method=artist.search&artist={query}&api_key={api_key}&format=json",
+      "query-input": "required name=query"
+    },
+    {
+      "@type": "SearchAction",
+      "name": "Search Tracks",
+      "description": "Search for tracks by name",
+      "target": "https://ws.audioscrobbler.com/2.0/?method=track.search&track={query}&api_key={api_key}&format=json",
+      "query-input": "required name=query"
+    }
+  ]
+}

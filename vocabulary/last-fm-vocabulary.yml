@@ -1,0 +1,126 @@
+vocabulary:
+  name: Last.fm API Vocabulary
+  description: Domain terms and concepts used in the Last.fm API
+  url: https://www.last.fm/api
+  terms:
+    - term: scrobble
+      definition: >-
+        The act of recording a track play to a user's Last.fm profile. A scrobble is submitted
+        with the artist name, track name, timestamp, and optional album, track number, and
+        MusicBrainz ID. Batch scrobbles of up to 50 tracks can be submitted in one request.
+      type: action
+      relatedTerms:
+        - nowplaying
+        - timestamp
+        - sessionKey
+
+    - term: nowplaying
+      definition: >-
+        A transient notification sent to Last.fm indicating that a user has started listening to
+        a track. Unlike a scrobble, a now-playing notification does not permanently record the
+        play. It is used to show real-time listening activity.
+      type: state
+      relatedTerms:
+        - scrobble
+
+    - term: mbid
+      definition: >-
+        MusicBrainz Identifier. A globally unique identifier assigned by the MusicBrainz open
+        music encyclopedia to artists, releases, recordings, and other music entities. Last.fm
+        uses MBIDs to allow unambiguous matching of music data.
+      type: identifier
+      externalUrl: https://musicbrainz.org/doc/MusicBrainz_Identifier
+
+    - term: sessionKey
+      definition: >-
+        A persistent authentication token (sk) returned by auth.getSession or
+        auth.getMobileSession that authorizes write operations on behalf of a user. Session keys
+        do not expire and must be stored securely by the client application.
+      type: authentication
+      relatedTerms:
+        - apiKey
+        - apiSignature
+
+    - term: apiKey
+      definition: >-
+        A unique string (api_key) identifying the application making requests to the Last.fm
+        API. All API calls require an API key, obtained by registering an application at
+        https://www.last.fm/api/account/create.
+      type: authentication
+
+    - term: apiSignature
+      definition: >-
+        A MD5 hash (api_sig) of all method parameters concatenated alphabetically with the API
+        secret, required for all authenticated write operations. Prevents tampering with
+        requests.
+      type: authentication
+      relatedTerms:
+        - sessionKey
+
+    - term: autocorrect
+      definition: >-
+        A parameter flag (0 or 1) that instructs the API to automatically correct misspelled
+        artist or track names using Last.fm's data. When enabled, the corrected name is used
+        for the lookup.
+      type: parameter
+
+    - term: period
+      definition: >-
+        A time range parameter used in user chart methods (getTopArtists, getTopTracks,
+        getTopAlbums). Valid values are: overall, 7day, 1month, 3month, 6month, 12month.
+      type: parameter
+      validValues:
+        - overall
+        - 7day
+        - 1month
+        - 3month
+        - 6month
+        - 12month
+
+    - term: tag
+      definition: >-
+        A community-applied label categorizing music by genre, mood, decade, or any other
+        descriptor. Last.fm's tag system powers genre-based discovery, chart filtering, and
+        artist/track categorization. Tags are user-generated and vote-ranked.
+      type: concept
+
+    - term: loved
+      definition: >-
+        A user action (track.love / track.unlove) that marks a track as loved in the user's
+        Last.fm profile. Loved tracks appear in the user's loved tracks list and influence
+        recommendations.
+      type: action
+      relatedTerms:
+        - scrobble
+
+    - term: weeklyChart
+      definition: >-
+        A rolling weekly chart of top artists, albums, or tracks for a user or globally. The
+        Last.fm API provides methods to retrieve dated weekly chart ranges
+        (user.getWeeklyChartList) and the chart contents for each range.
+      type: resource
+
+    - term: listeners
+      definition: >-
+        The count of unique Last.fm users who have scrobbled a given artist, album, or track.
+        Distinct from playcount which counts total plays including repeat listens.
+      type: metric
+      relatedTerms:
+        - playcount
+
+    - term: playcount
+      definition: >-
+        The total number of times an artist, album, or track has been scrobbled across all
+        Last.fm users. For user contexts, represents the number of times that specific user
+        has played the item.
+      type: metric
+      relatedTerms:
+        - listeners
+
+    - term: personalTags
+      definition: >-
+        Tags that a specific user has applied to artists or tracks, retrievable via
+        user.getPersonalTags. Distinct from global community tags.
+      type: concept
+      relatedTerms:
+        - tag
