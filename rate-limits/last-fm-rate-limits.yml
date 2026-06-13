@@ -1,0 +1,29 @@
+name: Last.fm API Rate Limits
+description: Last.fm enforces rate limits to prevent abuse and ensure service reliability. Specific hard limits are not published but are described in the API Terms of Service.
+url: https://www.last.fm/api/tos
+limits:
+  - name: Requests Per Second Per IP
+    description: Applications must not exceed 5 requests per second per originating IP address, averaged over a 5-minute period, without prior written consent from Last.fm.
+    value: 5
+    unit: requests per second
+    window: 5 minutes (averaged)
+    enforcement: Account suspension or API key revocation
+
+  - name: Data Storage Cap
+    description: Applications may cache or store Last.fm data up to a maximum of 100 MB (Reasonable Usage Cap) without prior written consent.
+    value: 100
+    unit: MB
+    enforcement: ToS violation; requires written consent to exceed
+
+  - name: Continuous High-Volume Usage
+    description: Accounts continuously making several calls per second or making excessive calls may be suspended.
+    value: null
+    unit: qualitative
+    enforcement: Account suspension
+
+notes:
+  - Last.fm does not publish a specific daily or monthly call quota.
+  - Commercial or research use requiring higher limits must be approved in writing by Last.fm (partners@last.fm).
+  - All requests should include an identifiable User-Agent header.
+  - Avoid calling the API on every page load for web applications.
+  - Circumventing rate limits or using multiple API keys to avoid restrictions is prohibited.

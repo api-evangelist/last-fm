@@ -1,0 +1,113 @@
+aid: last-fm
+url: https://raw.githubusercontent.com/api-evangelist/last-fm/refs/heads/main/apis.yml
+name: Last.fm
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Music
+  - Music Metadata
+  - Scrobbling
+  - Music Discovery
+  - Streaming
+description: >-
+  Last.fm is a music discovery and social listening platform that tracks users' listening habits
+  across devices and services via scrobbling. The Last.fm API provides access to a rich music
+  metadata database covering artist information, album data, track details, user listening history,
+  personalized charts, and music recommendations. Developers can integrate scrobbling, retrieve
+  top charts by geography or tag, explore similar artists and tracks, and access user profile data.
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
+apis:
+  - aid: last-fm:last-fm-api
+    name: Last.fm API
+    tags:
+      - Music
+      - Artists
+      - Albums
+      - Tracks
+      - Scrobbling
+      - Charts
+      - Users
+    humanURL: https://www.last.fm/api
+    baseURL: https://ws.audioscrobbler.com/2.0/
+    properties:
+      - url: https://www.last.fm/api
+        type: Documentation
+      - url: https://www.last.fm/api/intro
+        type: GettingStarted
+      - url: https://www.last.fm/api/authentication
+        type: Authentication
+      - url: https://www.last.fm/api/tos
+        type: TermsOfService
+    description: >-
+      The Last.fm API provides access to the Last.fm music platform, enabling developers to
+      retrieve music metadata for artists, albums, and tracks; read and write user scrobble data;
+      explore personalized recommendations; access global and geographic music charts; search the
+      music catalog; and retrieve user listening histories and social data such as friends and
+      loved tracks. Authentication is required for write operations including scrobbling. The API
+      uses REST over HTTP with responses available in JSON or XML format.
+common:
+  - type: Website
+    url: https://www.last.fm/
+  - type: Documentation
+    url: https://www.last.fm/api
+  - type: GettingStarted
+    url: https://www.last.fm/api/intro
+  - type: Authentication
+    url: https://www.last.fm/api/authentication
+  - type: TermsOfService
+    url: https://www.last.fm/api/tos
+  - type: GitHubOrganization
+    url: https://github.com/lastfm
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/last-fm
+  - type: Blog
+    url: https://www.last.fm/blog
+  - type: Pricing
+    url: https://www.last.fm/pro
+  - type: X
+    url: https://x.com/lastfm
+  - type: StatusPage
+    url: https://x.com/lastfmstatus
+  - type: Plans
+    url: plans/last-fm-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/last-fm-rate-limits.yml
+  - type: FinOps
+    url: finops/last-fm-finops.yml
+  - type: Features
+    data:
+      - name: Music Metadata
+        description: Comprehensive metadata for artists, albums, and tracks including biographies, images, tags, and similar items
+      - name: Scrobbling
+        description: Track submission API (Scrobbling 2.0) for recording listening history from any client or device
+      - name: User Listening History
+        description: Access recent tracks, loved tracks, top artists, albums, and tracks for any user
+      - name: Music Charts
+        description: Global and geographic top artists and tracks, plus tag-based and weekly user charts
+      - name: Music Discovery
+        description: Similar artist and track recommendations powered by Last.fm's social listening data
+      - name: Artist and Track Search
+        description: Full-text search across the Last.fm music catalog for artists, albums, and tracks
+      - name: Tag Exploration
+        description: Browse music by community-applied tags to discover themed playlists and artists
+      - name: User Social Data
+        description: Access user friends, listening comparisons, and shared music taste data
+  - type: UseCases
+    data:
+      - name: Music Player Scrobbling
+        description: Record tracks played in music apps to Last.fm user profiles for history and recommendations
+      - name: Music Metadata Enrichment
+        description: Augment music catalogs with artist bios, album art, tags, and similar artist data
+      - name: Personalized Charts
+        description: Display weekly, monthly, or all-time listening charts for users in applications
+      - name: Music Discovery Features
+        description: Power recommendation engines with similar artist and track data from Last.fm
+      - name: Social Listening
+        description: Show what friends are listening to and compare music tastes between users
+      - name: Geographic Music Trends
+        description: Display top artists and tracks by country or region for localized music features
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

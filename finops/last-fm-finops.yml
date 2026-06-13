@@ -1,0 +1,46 @@
+name: Last.fm API FinOps
+description: Financial operations guidance for teams integrating with the Last.fm API, covering cost management, budget planning, and commercial licensing considerations.
+url: https://www.last.fm/api/tos
+costModel:
+  type: free
+  description: The Last.fm API is free for non-commercial use. Commercial use requires a separate written agreement with Last.fm.
+  currency: USD
+
+tiers:
+  - name: Non-Commercial API
+    monthlyCost: 0.00
+    annualCost: 0.00
+    description: Full read access to music metadata, charts, scrobbling, and user data at no charge for non-commercial projects.
+
+  - name: Pro User Subscription (optional)
+    monthlyCost: 4.99
+    annualCost: 49.99
+    description: Optional end-user subscription for advanced analytics and profile features; not required for API access.
+
+  - name: Commercial API License
+    monthlyCost: null
+    annualCost: null
+    description: Custom pricing negotiated directly with Last.fm for commercial or high-volume use cases. Contact partners@last.fm.
+
+budgetGuidance:
+  - For non-commercial projects, API access is zero cost. Budget for engineering time only.
+  - For commercial products, initiate contact with Last.fm (partners@last.fm) early to understand revenue-sharing and licensing terms before launch.
+  - Cache API responses aggressively (within the 100 MB data storage cap) to reduce call volume and latency.
+  - Monitor call volume to stay within the 5 requests/second/IP guideline and avoid service interruptions.
+
+risks:
+  - name: Commercial Breach
+    description: Using the API commercially without a commercial license is a material breach of the ToS and can result in immediate API key termination.
+    mitigation: Contact partners@last.fm before launching any commercial product that uses Last.fm data.
+
+  - name: Undisclosed Rate Limits
+    description: Last.fm does not publish hard numeric daily/monthly quotas, creating uncertainty for capacity planning.
+    mitigation: Implement exponential backoff, caching, and monitor for HTTP 429 or 503 responses.
+
+  - name: Revenue Sharing
+    description: Last.fm reserves the right to negotiate revenue-sharing terms if an application monetizes Last.fm data.
+    mitigation: Review commercial agreement terms carefully before monetizing.
+
+attribution:
+  required: true
+  description: All applications using the Last.fm API must credit Last.fm with appropriate links back to last.fm as specified in the API Terms of Service.

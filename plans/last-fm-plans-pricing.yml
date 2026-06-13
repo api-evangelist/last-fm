@@ -1,0 +1,54 @@
+name: Last.fm Plans and Pricing
+description: Last.fm offers a free API with optional Pro subscription for end users.
+url: https://www.last.fm/pro
+plans:
+  - name: Free API Access
+    description: Free non-commercial API access for developers building applications using Last.fm data.
+    price: 0.00
+    currency: USD
+    unit: month
+    features:
+      - REST API access to music metadata
+      - Artist, album, and track data
+      - User listening history and scrobbling
+      - Music charts and recommendations
+      - Geo-based charts
+      - Tag-based exploration
+      - Non-commercial use only
+    limits:
+      - name: Rate Limit
+        description: No specific published rate limit; 5 requests per second per IP averaged over 5 minutes per ToS.
+        value: 5
+        unit: requests per second
+    commercial: false
+    contact: partners@last.fm
+
+  - name: Pro (User Subscription)
+    description: Premium subscription for end users providing enhanced analytics, ad-free browsing, and advanced profile customization.
+    price: 4.99
+    currency: USD
+    unit: month
+    annualPrice: 49.99
+    features:
+      - Scrobble editing
+      - Detailed listening reports and historical data
+      - Ad-free browsing
+      - Custom profile images and layouts
+      - Username changes
+      - Library search
+      - Monthly reports
+      - Exclusive charts
+      - 30% merchandise discount
+      - Early feature access
+      - Pro badge
+
+  - name: Commercial API Use
+    description: Commercial API access requires a separate agreement with Last.fm. Contact partners@last.fm for terms.
+    price: null
+    currency: USD
+    unit: custom
+    features:
+      - Unlimited data access (negotiated)
+      - Revenue-sharing terms possible
+      - SLA and support (negotiated)
+    contact: partners@last.fm
