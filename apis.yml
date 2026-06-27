@@ -54,11 +54,11 @@ apis:
       - url: vocabulary/last-fm-vocabulary.yml
         type: Vocabulary
       - url: examples/artist-getInfo-response.json
-        type: Example
+        type: Examples
       - url: examples/track-scrobble-request.json
-        type: Example
+        type: Examples
       - url: examples/user-getRecentTracks-response.json
-        type: Example
+        type: Examples
     description: >-
       The Last.fm API provides access to the Last.fm music platform, enabling developers to
       retrieve music metadata for artists, albums, and tracks; read and write user scrobble data;
