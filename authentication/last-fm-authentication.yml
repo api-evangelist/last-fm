@@ -1,0 +1,24 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/last-fm-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - query
+schemes:
+- name: ApiKey
+  type: apiKey
+  in: query
+  parameter: api_key
+  description: A Last.fm API key obtained from https://www.last.fm/api/account/create
+  sources:
+  - openapi/last-fm-openapi.yml
+- name: SessionKey
+  type: apiKey
+  in: query
+  parameter: sk
+  description: A session key obtained via the Last.fm authentication flow (auth.getSession or
+    auth.getMobileSession)
+  sources:
+  - openapi/last-fm-openapi.yml
