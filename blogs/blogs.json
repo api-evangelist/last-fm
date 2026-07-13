@@ -2,11 +2,13 @@
   "repo": "last-fm",
   "feeds": [
     {
-      "source": "https://www.last.fm/blog",
+      "source": "https://www.linkedin.com/company/last-fm",
+      "feed_url": "https://www.linkedin.com/company/last-fm",
+      "title": "",
       "saved": 0,
-      "error": "HTTP 404"
+      "method": "none"
     }
   ],
-  "fetched": "2026-06-27T12:51:08Z",
+  "fetched": "2026-07-11T11:50:51Z",
   "post_count": 0
 }
