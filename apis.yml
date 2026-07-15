@@ -67,6 +67,8 @@ apis:
       loved tracks. Authentication is required for write operations including scrobbling. The API
       uses REST over HTTP with responses available in JSON or XML format.
 common:
+  - type: AgenticAccess
+    url: agentic-access/last-fm-agentic-access.yml
   - type: DomainSecurity
     url: security/last-fm-domain-security.yml
   - type: Authentication
