@@ -2,7 +2,20 @@ aid: last-fm
 url: https://raw.githubusercontent.com/api-evangelist/last-fm/refs/heads/main/apis.yml
 name: Last.fm
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/last-fm.png
 tags:
   - Music
   - Music Metadata
@@ -20,53 +33,43 @@ modified: '2026-06-13'
 
 specificationVersion: '0.19'
 apis:
-  - aid: last-fm:last-fm-api
-    name: Last.fm API
-    tags:
-      - Music
-      - Artists
-      - Albums
-      - Tracks
-      - Scrobbling
-      - Charts
-      - Users
-    humanURL: https://www.last.fm/api
-    baseURL: https://ws.audioscrobbler.com/2.0/
-    properties:
-      - url: https://www.last.fm/api
-        type: Documentation
-      - url: https://www.last.fm/api/intro
-        type: GettingStarted
-      - url: https://www.last.fm/api/authentication
-        type: Authentication
-      - url: https://www.last.fm/api/tos
-        type: TermsOfService
-      - url: openapi/last-fm-openapi.yml
-        type: OpenAPI
-      - url: json-ld/last-fm-context.jsonld
-        type: JSONLDContext
-      - url: json-schema/artist.json
-        type: JSONSchema
-      - url: json-schema/track.json
-        type: JSONSchema
-      - url: json-schema/scrobble.json
-        type: JSONSchema
-      - url: vocabulary/last-fm-vocabulary.yml
-        type: Vocabulary
-      - url: examples/artist-getInfo-response.json
-        type: Examples
-      - url: examples/track-scrobble-request.json
-        type: Examples
-      - url: examples/user-getRecentTracks-response.json
-        type: Examples
-    description: >-
-      The Last.fm API provides access to the Last.fm music platform, enabling developers to
-      retrieve music metadata for artists, albums, and tracks; read and write user scrobble data;
-      explore personalized recommendations; access global and geographic music charts; search the
-      music catalog; and retrieve user listening histories and social data such as friends and
-      loved tracks. Authentication is required for write operations including scrobbling. The API
-      uses REST over HTTP with responses available in JSON or XML format.
+- aid: last-fm:last-fm-album-api
+  name: Last.fm Album API
+  description: Methods for retrieving album metadata and managing album tags
+  humanURL: https://www.last.fm/api
+  baseURL: https://ws.audioscrobbler.com/2.0/
+  tags:
+  - Album
+  properties:
+  - type: OpenAPI
+    url: openapi/last-fm-album-api-openapi.yml
+  - type: Documentation
+    url: https://www.last.fm/api
+  - type: GettingStarted
+    url: https://www.last.fm/api/intro
+  - type: Authentication
+    url: https://www.last.fm/api/authentication
+  - type: TermsOfService
+    url: https://www.last.fm/api/tos
+  - type: JSONLDContext
+    url: json-ld/last-fm-context.jsonld
+  - type: JSONSchema
+    url: json-schema/artist.json
+  - type: JSONSchema
+    url: json-schema/track.json
+  - type: JSONSchema
+    url: json-schema/scrobble.json
+  - type: Vocabulary
+    url: vocabulary/last-fm-vocabulary.yml
+  - type: Examples
+    url: examples/artist-getInfo-response.json
+  - type: Examples
+    url: examples/track-scrobble-request.json
+  - type: Examples
+    url: examples/user-getRecentTracks-response.json
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/lastfm/overview
   - type: AgenticAccess
     url: agentic-access/last-fm-agentic-access.yml
   - type: DomainSecurity
