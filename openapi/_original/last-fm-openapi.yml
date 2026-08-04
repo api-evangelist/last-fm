@@ -1,0 +1,2481 @@
+openapi: 3.0.3
+info:
+  title: Last.fm API
+  description: >-
+    The Last.fm API provides access to the Last.fm music platform, enabling developers to
+    retrieve music metadata for artists, albums, and tracks; read and write user scrobble data;
+    explore personalized recommendations; access global and geographic music charts; search the
+    music catalog; and retrieve user listening histories and social data such as friends and
+    loved tracks. Authentication is required for write operations including scrobbling. The API
+    uses REST over HTTP with responses available in JSON or XML format.
+  version: 2.0.0
+  contact:
+    name: Last.fm API Support
+    url: https://www.last.fm/api
+  termsOfService: https://www.last.fm/api/tos
+  license:
+    name: Last.fm API Terms of Service
+    url: https://www.last.fm/api/tos
+externalDocs:
+  description: Last.fm API Documentation
+  url: https://www.last.fm/api/intro
+servers:
+  - url: https://ws.audioscrobbler.com/2.0
+    description: Last.fm API endpoint
+security: []
+tags:
+  - name: Album
+    description: Methods for retrieving album metadata and managing album tags
+  - name: Artist
+    description: Methods for retrieving artist metadata and managing artist tags
+  - name: Auth
+    description: Authentication methods for obtaining session keys
+  - name: Chart
+    description: Global chart data for top artists, tracks, and tags
+  - name: Geo
+    description: Geographic music data by country
+  - name: Library
+    description: Access to a user's music library
+  - name: Tag
+    description: Methods for browsing music by community-applied tags
+  - name: Track
+    description: Methods for retrieving track metadata, scrobbling, and managing track tags
+  - name: User
+    description: Methods for accessing user profiles, listening history, and social data
+paths:
+  /:
+    get:
+      operationId: album_getInfo
+      summary: Get album info
+      description: >-
+        Get the metadata and tracklisting for an album on Last.fm using the album name or
+        a MusicBrainz id.
+      tags:
+        - Album
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - album.getInfo
+          description: API method name
+        - name: artist
+          in: query
+          required: false
+          schema:
+            type: string
+          description: The artist name. Required unless mbid is provided.
+        - name: album
+          in: query
+          required: false
+          schema:
+            type: string
+          description: The album name. Required unless mbid is provided.
+        - name: mbid
+          in: query
+          required: false
+          schema:
+            type: string
+          description: The MusicBrainz ID for the album.
+        - name: autocorrect
+          in: query
+          required: false
+          schema:
+            type: integer
+            enum: [0, 1]
+          description: Transform misspelled artist names into correct artist names (0 or 1).
+        - name: username
+          in: query
+          required: false
+          schema:
+            type: string
+          description: The username for the context of the request. Includes playcount in response.
+        - name: lang
+          in: query
+          required: false
+          schema:
+            type: string
+          description: The language to return the biography in, expressed as an ISO 639 alpha-2 code.
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+          description: A Last.fm API key.
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+          description: The response format (default is xml).
+      responses:
+        '200':
+          description: Successful album info response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlbumInfoResponse'
+    post:
+      operationId: album_addTags
+      summary: Add tags to an album
+      description: Tag an album using a list of user supplied tags.
+      tags:
+        - Album
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - album.addTags
+        - name: artist
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The artist name.
+        - name: album
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The album name.
+        - name: tags
+          in: query
+          required: true
+          schema:
+            type: string
+          description: A comma delimited list of user supplied tags to apply to this album. Accepts a maximum of 10 tags.
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+          description: A Last.fm API key.
+        - name: api_sig
+          in: query
+          required: true
+          schema:
+            type: string
+          description: A Last.fm method signature. See authentication.
+        - name: sk
+          in: query
+          required: true
+          schema:
+            type: string
+          description: A session key generated by authenticating a user via the authentication API.
+      responses:
+        '200':
+          description: Tags added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusResponse'
+      security:
+        - SessionKey: []
+x-paths:
+  artist_getInfo:
+    get:
+      operationId: artist_getInfo
+      summary: Get artist info
+      description: Get the metadata for an artist on Last.fm. Includes biography, truncated at 300 characters.
+      tags:
+        - Artist
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - artist.getInfo
+        - name: artist
+          in: query
+          required: false
+          schema:
+            type: string
+          description: The artist name. Required unless mbid is provided.
+        - name: mbid
+          in: query
+          required: false
+          schema:
+            type: string
+          description: The MusicBrainz ID for the artist. Takes priority over artist parameter if set.
+        - name: lang
+          in: query
+          required: false
+          schema:
+            type: string
+          description: The language to return the biography in, expressed as an ISO 639 alpha-2 code.
+        - name: autocorrect
+          in: query
+          required: false
+          schema:
+            type: integer
+            enum: [0, 1]
+          description: Transform misspelled artist names into correct artist names (0 or 1).
+        - name: username
+          in: query
+          required: false
+          schema:
+            type: string
+          description: The username for the context of the request. Includes the user's playcount for this artist.
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+          description: A Last.fm API key.
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+      responses:
+        '200':
+          description: Successful artist info response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtistInfoResponse'
+  artist_getSimilar:
+    get:
+      operationId: artist_getSimilar
+      summary: Get similar artists
+      description: Get all the artists similar to this artist.
+      tags:
+        - Artist
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - artist.getSimilar
+        - name: artist
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: mbid
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: autocorrect
+          in: query
+          required: false
+          schema:
+            type: integer
+            enum: [0, 1]
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Limit the number of similar artists returned.
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+      responses:
+        '200':
+          description: List of similar artists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimilarArtistsResponse'
+  artist_search:
+    get:
+      operationId: artist_search
+      summary: Search for an artist
+      description: Search for an artist by name. Returns artist matches sorted by relevance.
+      tags:
+        - Artist
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - artist.search
+        - name: artist
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The artist name to search for.
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 30
+          description: The number of results to fetch per page. Defaults to 30.
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+          description: The page number to fetch. Defaults to first page.
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+      responses:
+        '200':
+          description: Artist search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtistSearchResponse'
+  track_scrobble:
+    post:
+      operationId: track_scrobble
+      summary: Scrobble tracks
+      description: >-
+        Used to add a track-play to a user's profile. Accepts up to 50 batch scrobbles. Requires
+        authentication via session key.
+      tags:
+        - Track
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - track.scrobble
+        - name: artist[i]
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The artist name (use index i for batch scrobbles, e.g. artist[0]).
+        - name: track[i]
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The track name (use index i for batch scrobbles).
+        - name: timestamp[i]
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: The time the track started playing, in UNIX timestamp format.
+        - name: album[i]
+          in: query
+          required: false
+          schema:
+            type: string
+          description: The album name.
+        - name: albumArtist[i]
+          in: query
+          required: false
+          schema:
+            type: string
+          description: The album artist, if different from the track artist.
+        - name: trackNumber[i]
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: The track number of the track on the album.
+        - name: mbid[i]
+          in: query
+          required: false
+          schema:
+            type: string
+          description: The MusicBrainz Track ID.
+        - name: duration[i]
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: The length of the track in seconds.
+        - name: chosenByUser[i]
+          in: query
+          required: false
+          schema:
+            type: integer
+            enum: [0, 1]
+          description: Set to 1 if the user chose this song, or 0 if the song was chosen by someone else (radio, random, etc).
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: api_sig
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: sk
+          in: query
+          required: true
+          schema:
+            type: string
+          description: A session key generated by authenticating a user.
+      responses:
+        '200':
+          description: Scrobble response with accepted and ignored counts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScrobbleResponse'
+      security:
+        - SessionKey: []
+  track_updateNowPlaying:
+    post:
+      operationId: track_updateNowPlaying
+      summary: Update now playing
+      description: Notify Last.fm that a user has started listening to a track. Requires authentication.
+      tags:
+        - Track
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - track.updateNowPlaying
+        - name: artist
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: track
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: album
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: albumArtist
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: trackNumber
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: mbid
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: duration
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: api_sig
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: sk
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Now playing status updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NowPlayingResponse'
+      security:
+        - SessionKey: []
+  track_getInfo:
+    get:
+      operationId: track_getInfo
+      summary: Get track info
+      description: Get the metadata for a track on Last.fm using the artist/track name or a MusicBrainz id.
+      tags:
+        - Track
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - track.getInfo
+        - name: artist
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: track
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: mbid
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: autocorrect
+          in: query
+          required: false
+          schema:
+            type: integer
+            enum: [0, 1]
+        - name: username
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+      responses:
+        '200':
+          description: Track info response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrackInfoResponse'
+  track_search:
+    get:
+      operationId: track_search
+      summary: Search for a track
+      description: Search for a track by track name. Returns track matches sorted by relevance.
+      tags:
+        - Track
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - track.search
+        - name: track
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The track name to search for.
+        - name: artist
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Narrow your results by specifying an artist.
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 30
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+      responses:
+        '200':
+          description: Track search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrackSearchResponse'
+  track_getSimilar:
+    get:
+      operationId: track_getSimilar
+      summary: Get similar tracks
+      description: Returns similar tracks for this track based on listening data.
+      tags:
+        - Track
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - track.getSimilar
+        - name: artist
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: track
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: mbid
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: autocorrect
+          in: query
+          required: false
+          schema:
+            type: integer
+            enum: [0, 1]
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+      responses:
+        '200':
+          description: Similar tracks
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimilarTracksResponse'
+  track_love:
+    post:
+      operationId: track_love
+      summary: Love a track
+      description: Love a track for a user profile. Requires authentication.
+      tags:
+        - Track
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - track.love
+        - name: artist
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: track
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: api_sig
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: sk
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Track loved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusResponse'
+      security:
+        - SessionKey: []
+  user_getRecentTracks:
+    get:
+      operationId: user_getRecentTracks
+      summary: Get user recent tracks
+      description: Get a list of the recent tracks listened to by this user. Also includes the currently playing track with the nowplaying="true" attribute if the user is currently listening.
+      tags:
+        - User
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - user.getRecentTracks
+        - name: user
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The last.fm username to fetch the recent tracks of.
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 50
+            maximum: 200
+          description: The number of results to fetch per page. Defaults to 50. Maximum is 200.
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: from
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Beginning timestamp of a range, UNIX timestamp format.
+        - name: to
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: End timestamp of a range, UNIX timestamp format.
+        - name: extended
+          in: query
+          required: false
+          schema:
+            type: integer
+            enum: [0, 1]
+          description: Includes extended data in each artist, and whether the user has loved each track.
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+      responses:
+        '200':
+          description: Recent tracks list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecentTracksResponse'
+  user_getInfo:
+    get:
+      operationId: user_getInfo
+      summary: Get user info
+      description: Get information about a user profile.
+      tags:
+        - User
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - user.getInfo
+        - name: user
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The username to fetch the info for.
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+      responses:
+        '200':
+          description: User profile information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfoResponse'
+  user_getTopArtists:
+    get:
+      operationId: user_getTopArtists
+      summary: Get user top artists
+      description: Get the top artists listened to by a user. You can stipulate a time period.
+      tags:
+        - User
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - user.getTopArtists
+        - name: user
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: period
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [overall, 7day, 1month, 3month, 6month, 12month]
+          description: The time period over which to retrieve top artists.
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 50
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+      responses:
+        '200':
+          description: User top artists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TopArtistsResponse'
+  user_getTopTracks:
+    get:
+      operationId: user_getTopTracks
+      summary: Get user top tracks
+      description: Get the top tracks listened to by a user. You can stipulate a time period.
+      tags:
+        - User
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - user.getTopTracks
+        - name: user
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: period
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [overall, 7day, 1month, 3month, 6month, 12month]
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 50
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+      responses:
+        '200':
+          description: User top tracks
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TopTracksResponse'
+  user_getLovedTracks:
+    get:
+      operationId: user_getLovedTracks
+      summary: Get user loved tracks
+      description: A paginated list of all the tracks a user has loved.
+      tags:
+        - User
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - user.getLovedTracks
+        - name: user
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 50
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+      responses:
+        '200':
+          description: Loved tracks list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LovedTracksResponse'
+  user_getFriends:
+    get:
+      operationId: user_getFriends
+      summary: Get user friends
+      description: Get a list of the user's friends on Last.fm.
+      tags:
+        - User
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - user.getFriends
+        - name: user
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: recenttracks
+          in: query
+          required: false
+          schema:
+            type: integer
+            enum: [0, 1]
+          description: Whether or not to include information about friends' recent listening.
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 50
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+      responses:
+        '200':
+          description: User friends list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FriendsResponse'
+  chart_getTopArtists:
+    get:
+      operationId: chart_getTopArtists
+      summary: Get top artists chart
+      description: Get the top artists chart.
+      tags:
+        - Chart
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - chart.getTopArtists
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 50
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+      responses:
+        '200':
+          description: Top artists chart
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChartArtistsResponse'
+  chart_getTopTracks:
+    get:
+      operationId: chart_getTopTracks
+      summary: Get top tracks chart
+      description: Get the top tracks chart.
+      tags:
+        - Chart
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - chart.getTopTracks
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 50
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+      responses:
+        '200':
+          description: Top tracks chart
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChartTracksResponse'
+  chart_getTopTags:
+    get:
+      operationId: chart_getTopTags
+      summary: Get top tags chart
+      description: Get the top tags chart.
+      tags:
+        - Chart
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - chart.getTopTags
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 50
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+      responses:
+        '200':
+          description: Top tags chart
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChartTagsResponse'
+  geo_getTopArtists:
+    get:
+      operationId: geo_getTopArtists
+      summary: Get top artists by country
+      description: Get the most popular artists on Last.fm by country.
+      tags:
+        - Geo
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - geo.getTopArtists
+        - name: country
+          in: query
+          required: true
+          schema:
+            type: string
+          description: A country name, as defined by the ISO 3166-1 country names standard.
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 50
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+      responses:
+        '200':
+          description: Top artists for the specified country
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeoTopArtistsResponse'
+  geo_getTopTracks:
+    get:
+      operationId: geo_getTopTracks
+      summary: Get top tracks by country
+      description: Get the most popular tracks on Last.fm last week by country.
+      tags:
+        - Geo
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - geo.getTopTracks
+        - name: country
+          in: query
+          required: true
+          schema:
+            type: string
+          description: A country name, as defined by the ISO 3166-1 country names standard.
+        - name: location
+          in: query
+          required: false
+          schema:
+            type: string
+          description: A metro name, to fetch the charts for.
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 50
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+      responses:
+        '200':
+          description: Top tracks for the specified country
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeoTopTracksResponse'
+  auth_getToken:
+    get:
+      operationId: auth_getToken
+      summary: Get an authentication token
+      description: Fetch an unathorized request token for an API account. This is step 1 of the authentication process for desktop applications.
+      tags:
+        - Auth
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - auth.getToken
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: api_sig
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+      responses:
+        '200':
+          description: Auth token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokenResponse'
+  auth_getSession:
+    get:
+      operationId: auth_getSession
+      summary: Get a session key
+      description: Fetch a session key for a user. This is the final step of desktop authentication.
+      tags:
+        - Auth
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - auth.getSession
+        - name: token
+          in: query
+          required: true
+          schema:
+            type: string
+          description: A token previously fetched using auth.getToken.
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: api_sig
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+      responses:
+        '200':
+          description: Session key and user info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthSessionResponse'
+  auth_getMobileSession:
+    post:
+      operationId: auth_getMobileSession
+      summary: Get a mobile session key
+      description: Create a web service session for a user. Used for mobile applications or username/password-based authentication.
+      tags:
+        - Auth
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - auth.getMobileSession
+        - name: username
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: api_sig
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Mobile session key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthSessionResponse'
+  tag_getInfo:
+    get:
+      operationId: tag_getInfo
+      summary: Get tag info
+      description: Get the metadata for a tag.
+      tags:
+        - Tag
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - tag.getInfo
+        - name: tag
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The tag name.
+        - name: lang
+          in: query
+          required: false
+          schema:
+            type: string
+          description: The language to return the wiki summary in, expressed as an ISO 639 alpha-2 code.
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+      responses:
+        '200':
+          description: Tag metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagInfoResponse'
+  tag_getTopArtists:
+    get:
+      operationId: tag_getTopArtists
+      summary: Get top artists for a tag
+      description: Get the top artists tagged by this tag, ordered by tag count.
+      tags:
+        - Tag
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - tag.getTopArtists
+        - name: tag
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 50
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+      responses:
+        '200':
+          description: Top artists for the tag
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagTopArtistsResponse'
+  tag_getTopTracks:
+    get:
+      operationId: tag_getTopTracks
+      summary: Get top tracks for a tag
+      description: Get the top tracks tagged by this tag, ordered by tag count.
+      tags:
+        - Tag
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - tag.getTopTracks
+        - name: tag
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 50
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+      responses:
+        '200':
+          description: Top tracks for the tag
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagTopTracksResponse'
+  library_getArtists:
+    get:
+      operationId: library_getArtists
+      summary: Get artists in user's library
+      description: A paginated list of all the artists in a user's library, with play counts and tag counts.
+      tags:
+        - Library
+      parameters:
+        - name: method
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - library.getArtists
+        - name: user
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The user whose library you want to fetch.
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 50
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: api_key
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [json, xml]
+      responses:
+        '200':
+          description: Artists in user's library
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LibraryArtistsResponse'
+components:
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      in: query
+      name: api_key
+      description: A Last.fm API key obtained from https://www.last.fm/api/account/create
+    SessionKey:
+      type: apiKey
+      in: query
+      name: sk
+      description: A session key obtained via the Last.fm authentication flow (auth.getSession or auth.getMobileSession)
+  schemas:
+    Image:
+      type: object
+      properties:
+        '#text':
+          type: string
+          description: Image URL
+        size:
+          type: string
+          enum: [small, medium, large, extralarge, mega]
+    Tag:
+      type: object
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+    Artist:
+      type: object
+      properties:
+        name:
+          type: string
+        mbid:
+          type: string
+        url:
+          type: string
+        image:
+          type: array
+          items:
+            $ref: '#/components/schemas/Image'
+    ArtistStats:
+      type: object
+      properties:
+        listeners:
+          type: string
+        playcount:
+          type: string
+        userplaycount:
+          type: string
+    ArtistBio:
+      type: object
+      properties:
+        published:
+          type: string
+        summary:
+          type: string
+        content:
+          type: string
+    ArtistInfoResponse:
+      type: object
+      properties:
+        artist:
+          type: object
+          properties:
+            name:
+              type: string
+            mbid:
+              type: string
+            url:
+              type: string
+            image:
+              type: array
+              items:
+                $ref: '#/components/schemas/Image'
+            streamable:
+              type: string
+            ontour:
+              type: string
+            stats:
+              $ref: '#/components/schemas/ArtistStats'
+            similar:
+              type: object
+              properties:
+                artist:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Artist'
+            tags:
+              type: object
+              properties:
+                tag:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Tag'
+            bio:
+              $ref: '#/components/schemas/ArtistBio'
+    SimilarArtistsResponse:
+      type: object
+      properties:
+        similarartists:
+          type: object
+          properties:
+            artist:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  mbid:
+                    type: string
+                  match:
+                    type: string
+                  url:
+                    type: string
+                  image:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Image'
+    ArtistSearchResponse:
+      type: object
+      properties:
+        results:
+          type: object
+          properties:
+            artistmatches:
+              type: object
+              properties:
+                artist:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Artist'
+    AlbumInfoResponse:
+      type: object
+      properties:
+        album:
+          type: object
+          properties:
+            name:
+              type: string
+            artist:
+              type: string
+            id:
+              type: string
+            mbid:
+              type: string
+            url:
+              type: string
+            releasedate:
+              type: string
+            image:
+              type: array
+              items:
+                $ref: '#/components/schemas/Image'
+            listeners:
+              type: string
+            playcount:
+              type: string
+            toptags:
+              type: object
+              properties:
+                tag:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Tag'
+            tracks:
+              type: object
+              properties:
+                track:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      duration:
+                        type: integer
+                      mbid:
+                        type: string
+                      url:
+                        type: string
+                      artist:
+                        $ref: '#/components/schemas/Artist'
+    TrackInfoResponse:
+      type: object
+      properties:
+        track:
+          type: object
+          properties:
+            name:
+              type: string
+            mbid:
+              type: string
+            url:
+              type: string
+            duration:
+              type: string
+            listeners:
+              type: string
+            playcount:
+              type: string
+            artist:
+              $ref: '#/components/schemas/Artist'
+            album:
+              type: object
+              properties:
+                artist:
+                  type: string
+                title:
+                  type: string
+                mbid:
+                  type: string
+                url:
+                  type: string
+                image:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Image'
+            toptags:
+              type: object
+              properties:
+                tag:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Tag'
+    SimilarTracksResponse:
+      type: object
+      properties:
+        similartracks:
+          type: object
+          properties:
+            track:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  mbid:
+                    type: string
+                  match:
+                    type: string
+                  url:
+                    type: string
+                  artist:
+                    $ref: '#/components/schemas/Artist'
+    TrackSearchResponse:
+      type: object
+      properties:
+        results:
+          type: object
+          properties:
+            trackmatches:
+              type: object
+              properties:
+                track:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      artist:
+                        type: string
+                      url:
+                        type: string
+                      listeners:
+                        type: string
+                      mbid:
+                        type: string
+    ScrobbleResponse:
+      type: object
+      properties:
+        scrobbles:
+          type: object
+          properties:
+            '@attr':
+              type: object
+              properties:
+                accepted:
+                  type: integer
+                ignored:
+                  type: integer
+            scrobble:
+              type: array
+              items:
+                type: object
+                properties:
+                  track:
+                    type: object
+                    properties:
+                      '#text':
+                        type: string
+                      corrected:
+                        type: string
+                  artist:
+                    type: object
+                    properties:
+                      '#text':
+                        type: string
+                      corrected:
+                        type: string
+                  album:
+                    type: object
+                    properties:
+                      '#text':
+                        type: string
+                      corrected:
+                        type: string
+                  timestamp:
+                    type: string
+                  ignoredMessage:
+                    type: object
+                    properties:
+                      '#text':
+                        type: string
+                      code:
+                        type: string
+    NowPlayingResponse:
+      type: object
+      properties:
+        nowplaying:
+          type: object
+          properties:
+            track:
+              type: object
+              properties:
+                '#text':
+                  type: string
+                corrected:
+                  type: string
+            artist:
+              type: object
+              properties:
+                '#text':
+                  type: string
+                corrected:
+                  type: string
+            album:
+              type: object
+              properties:
+                '#text':
+                  type: string
+                corrected:
+                  type: string
+            ignoredMessage:
+              type: object
+              properties:
+                '#text':
+                  type: string
+                code:
+                  type: string
+    RecentTracksResponse:
+      type: object
+      properties:
+        recenttracks:
+          type: object
+          properties:
+            '@attr':
+              type: object
+              properties:
+                user:
+                  type: string
+                page:
+                  type: string
+                perPage:
+                  type: string
+                totalPages:
+                  type: string
+                total:
+                  type: string
+            track:
+              type: array
+              items:
+                type: object
+                properties:
+                  artist:
+                    type: object
+                    properties:
+                      '#text':
+                        type: string
+                      mbid:
+                        type: string
+                  name:
+                    type: string
+                  mbid:
+                    type: string
+                  album:
+                    type: object
+                    properties:
+                      '#text':
+                        type: string
+                      mbid:
+                        type: string
+                  url:
+                    type: string
+                  date:
+                    type: object
+                    properties:
+                      uts:
+                        type: string
+                      '#text':
+                        type: string
+                  streamable:
+                    type: string
+                  '@attr':
+                    type: object
+                    properties:
+                      nowplaying:
+                        type: string
+    UserInfoResponse:
+      type: object
+      properties:
+        user:
+          type: object
+          properties:
+            name:
+              type: string
+            realname:
+              type: string
+            url:
+              type: string
+            image:
+              type: array
+              items:
+                $ref: '#/components/schemas/Image'
+            country:
+              type: string
+            age:
+              type: string
+            gender:
+              type: string
+            subscriber:
+              type: string
+            playcount:
+              type: string
+            playlists:
+              type: string
+            bootstrap:
+              type: string
+            registered:
+              type: object
+              properties:
+                '#text':
+                  type: string
+                unixtime:
+                  type: string
+    TopArtistsResponse:
+      type: object
+      properties:
+        topartists:
+          type: object
+          properties:
+            '@attr':
+              type: object
+              properties:
+                user:
+                  type: string
+                page:
+                  type: string
+                perPage:
+                  type: string
+                totalPages:
+                  type: string
+            artist:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  playcount:
+                    type: string
+                  mbid:
+                    type: string
+                  url:
+                    type: string
+                  image:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Image'
+    TopTracksResponse:
+      type: object
+      properties:
+        toptracks:
+          type: object
+          properties:
+            '@attr':
+              type: object
+              properties:
+                user:
+                  type: string
+                page:
+                  type: string
+                perPage:
+                  type: string
+                totalPages:
+                  type: string
+            track:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  playcount:
+                    type: string
+                  mbid:
+                    type: string
+                  url:
+                    type: string
+                  artist:
+                    $ref: '#/components/schemas/Artist'
+    LovedTracksResponse:
+      type: object
+      properties:
+        lovedtracks:
+          type: object
+          properties:
+            '@attr':
+              type: object
+              properties:
+                user:
+                  type: string
+                page:
+                  type: string
+                perPage:
+                  type: string
+                totalPages:
+                  type: string
+            track:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  mbid:
+                    type: string
+                  url:
+                    type: string
+                  date:
+                    type: object
+                    properties:
+                      uts:
+                        type: string
+                      '#text':
+                        type: string
+                  artist:
+                    $ref: '#/components/schemas/Artist'
+    FriendsResponse:
+      type: object
+      properties:
+        friends:
+          type: object
+          properties:
+            '@attr':
+              type: object
+              properties:
+                user:
+                  type: string
+                page:
+                  type: string
+                perPage:
+                  type: string
+                totalPages:
+                  type: string
+            user:
+              type: array
+              items:
+                $ref: '#/components/schemas/UserInfoResponse/properties/user'
+    ChartArtistsResponse:
+      type: object
+      properties:
+        artists:
+          type: object
+          properties:
+            '@attr':
+              type: object
+              properties:
+                page:
+                  type: string
+                perPage:
+                  type: string
+                totalPages:
+                  type: string
+            artist:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  playcount:
+                    type: string
+                  listeners:
+                    type: string
+                  mbid:
+                    type: string
+                  url:
+                    type: string
+    ChartTracksResponse:
+      type: object
+      properties:
+        tracks:
+          type: object
+          properties:
+            '@attr':
+              type: object
+              properties:
+                page:
+                  type: string
+                perPage:
+                  type: string
+                totalPages:
+                  type: string
+            track:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  playcount:
+                    type: string
+                  listeners:
+                    type: string
+                  mbid:
+                    type: string
+                  url:
+                    type: string
+                  artist:
+                    $ref: '#/components/schemas/Artist'
+    ChartTagsResponse:
+      type: object
+      properties:
+        tags:
+          type: object
+          properties:
+            '@attr':
+              type: object
+              properties:
+                page:
+                  type: string
+                perPage:
+                  type: string
+                totalPages:
+                  type: string
+            tag:
+              type: array
+              items:
+                $ref: '#/components/schemas/Tag'
+    GeoTopArtistsResponse:
+      type: object
+      properties:
+        topartists:
+          type: object
+          properties:
+            '@attr':
+              type: object
+              properties:
+                country:
+                  type: string
+                page:
+                  type: string
+                perPage:
+                  type: string
+                totalPages:
+                  type: string
+            artist:
+              type: array
+              items:
+                $ref: '#/components/schemas/Artist'
+    GeoTopTracksResponse:
+      type: object
+      properties:
+        tracks:
+          type: object
+          properties:
+            '@attr':
+              type: object
+              properties:
+                country:
+                  type: string
+                page:
+                  type: string
+                perPage:
+                  type: string
+                totalPages:
+                  type: string
+            track:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  duration:
+                    type: string
+                  listeners:
+                    type: string
+                  mbid:
+                    type: string
+                  url:
+                    type: string
+                  artist:
+                    $ref: '#/components/schemas/Artist'
+    AuthTokenResponse:
+      type: object
+      properties:
+        token:
+          type: string
+    AuthSessionResponse:
+      type: object
+      properties:
+        session:
+          type: object
+          properties:
+            name:
+              type: string
+            key:
+              type: string
+            subscriber:
+              type: integer
+    TagInfoResponse:
+      type: object
+      properties:
+        tag:
+          type: object
+          properties:
+            name:
+              type: string
+            total:
+              type: integer
+            reach:
+              type: integer
+            wiki:
+              type: object
+              properties:
+                summary:
+                  type: string
+                content:
+                  type: string
+    TagTopArtistsResponse:
+      type: object
+      properties:
+        topartists:
+          type: object
+          properties:
+            '@attr':
+              type: object
+              properties:
+                tag:
+                  type: string
+                page:
+                  type: string
+                perPage:
+                  type: string
+                totalPages:
+                  type: string
+            artist:
+              type: array
+              items:
+                $ref: '#/components/schemas/Artist'
+    TagTopTracksResponse:
+      type: object
+      properties:
+        tracks:
+          type: object
+          properties:
+            '@attr':
+              type: object
+              properties:
+                tag:
+                  type: string
+                page:
+                  type: string
+                perPage:
+                  type: string
+                totalPages:
+                  type: string
+            track:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  duration:
+                    type: string
+                  mbid:
+                    type: string
+                  url:
+                    type: string
+                  artist:
+                    $ref: '#/components/schemas/Artist'
+    LibraryArtistsResponse:
+      type: object
+      properties:
+        artists:
+          type: object
+          properties:
+            '@attr':
+              type: object
+              properties:
+                user:
+                  type: string
+                page:
+                  type: string
+                perPage:
+                  type: string
+                totalPages:
+                  type: string
+            artist:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  playcount:
+                    type: string
+                  tagcount:
+                    type: string
+                  mbid:
+                    type: string
+                  url:
+                    type: string
+    StatusResponse:
+      type: object
+      properties:
+        lfm:
+          type: object
+          properties:
+            status:
+              type: string
+              enum: [ok, failed]

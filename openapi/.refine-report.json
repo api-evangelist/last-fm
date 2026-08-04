@@ -1,0 +1,14 @@
+{
+  "provider": "last-fm",
+  "sources": [
+    "last-fm-album-api-openapi.yml"
+  ],
+  "outputs": [
+    "last-fm-album-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

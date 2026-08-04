@@ -1,0 +1,353 @@
+{
+  "info": {
+    "_postman_id": "d7e080e2-e0f2-4539-854d-92da976875ce",
+    "name": "Last.fm Album API",
+    "description": "The Last.fm API provides access to the Last.fm music platform, enabling developers to retrieve music metadata for artists, albums, and tracks; read and write user scrobble data; explore personalized recommendations; access global and geographic music charts; search the music catalog; and retrieve user listening histories and social data such as friends and loved tracks. Authentication is required for write operations including scrobbling. The API uses REST over HTTP with responses available in JSON or XML format.\n\nContact Support:\n Name: Last.fm API Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:02:48.000Z",
+    "updatedAt": "2026-07-28T02:02:48.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-d7e080e2-e0f2-4539-854d-92da976875ce"
+  },
+  "item": [
+    {
+      "name": "/",
+      "item": [
+        {
+          "name": "Get album info",
+          "id": "3f23dbf9-9cfd-4722-9a03-5c4e5e6ee17f",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/?method=album.getInfo&artist=<string>&album=<string>&mbid=<string>&autocorrect=0&username=<string>&lang=<string>&api_key=<string>&format=xml",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "description": "(Required) API method name",
+                  "key": "method",
+                  "value": "album.getInfo"
+                },
+                {
+                  "description": "The artist name. Required unless mbid is provided.",
+                  "key": "artist",
+                  "value": "<string>"
+                },
+                {
+                  "description": "The album name. Required unless mbid is provided.",
+                  "key": "album",
+                  "value": "<string>"
+                },
+                {
+                  "description": "The MusicBrainz ID for the album.",
+                  "key": "mbid",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Transform misspelled artist names into correct artist names (0 or 1).",
+                  "key": "autocorrect",
+                  "value": "0"
+                },
+                {
+                  "description": "The username for the context of the request. Includes playcount in response.",
+                  "key": "username",
+                  "value": "<string>"
+                },
+                {
+                  "description": "The language to return the biography in, expressed as an ISO 639 alpha-2 code.",
+                  "key": "lang",
+                  "value": "<string>"
+                },
+                {
+                  "description": "(Required) A Last.fm API key.",
+                  "key": "api_key",
+                  "value": "<string>"
+                },
+                {
+                  "description": "The response format (default is xml).",
+                  "key": "format",
+                  "value": "xml"
+                }
+              ]
+            },
+            "description": "Get the metadata and tracklisting for an album on Last.fm using the album name or a MusicBrainz id."
+          },
+          "response": [
+            {
+              "id": "fac7b0a7-e786-48ea-99e1-203aaf4ccd78",
+              "name": "Successful album info response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/?method=album.getInfo&artist=<string>&album=<string>&mbid=<string>&autocorrect=0&username=<string>&lang=<string>&api_key=<string>&format=xml",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) API method name",
+                      "key": "method",
+                      "value": "album.getInfo"
+                    },
+                    {
+                      "description": "The artist name. Required unless mbid is provided.",
+                      "key": "artist",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The album name. Required unless mbid is provided.",
+                      "key": "album",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The MusicBrainz ID for the album.",
+                      "key": "mbid",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Transform misspelled artist names into correct artist names (0 or 1).",
+                      "key": "autocorrect",
+                      "value": "0"
+                    },
+                    {
+                      "description": "The username for the context of the request. Includes playcount in response.",
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The language to return the biography in, expressed as an ISO 639 alpha-2 code.",
+                      "key": "lang",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) A Last.fm API key.",
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The response format (default is xml).",
+                      "key": "format",
+                      "value": "xml"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"album\": {\n    \"name\": \"<string>\",\n    \"artist\": \"<string>\",\n    \"id\": \"<string>\",\n    \"mbid\": \"<string>\",\n    \"url\": \"<string>\",\n    \"releasedate\": \"<string>\",\n    \"image\": [\n      {\n        \"#text\": \"<string>\",\n        \"size\": \"large\"\n      },\n      {\n        \"#text\": \"<string>\",\n        \"size\": \"mega\"\n      }\n    ],\n    \"listeners\": \"<string>\",\n    \"playcount\": \"<string>\",\n    \"toptags\": {\n      \"tag\": [\n        {\n          \"name\": \"<string>\",\n          \"url\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"url\": \"<string>\"\n        }\n      ]\n    },\n    \"tracks\": {\n      \"track\": [\n        {\n          \"name\": \"<string>\",\n          \"duration\": \"<integer>\",\n          \"mbid\": \"<string>\",\n          \"url\": \"<string>\",\n          \"artist\": {\n            \"name\": \"<string>\",\n            \"mbid\": \"<string>\",\n            \"url\": \"<string>\",\n            \"image\": [\n              {\n                \"#text\": \"<string>\",\n                \"size\": \"extralarge\"\n              },\n              {\n                \"#text\": \"<string>\",\n                \"size\": \"small\"\n              }\n            ]\n          }\n        },\n        {\n          \"name\": \"<string>\",\n          \"duration\": \"<integer>\",\n          \"mbid\": \"<string>\",\n          \"url\": \"<string>\",\n          \"artist\": {\n            \"name\": \"<string>\",\n            \"mbid\": \"<string>\",\n            \"url\": \"<string>\",\n            \"image\": [\n              {\n                \"#text\": \"<string>\",\n                \"size\": \"small\"\n              },\n              {\n                \"#text\": \"<string>\",\n                \"size\": \"extralarge\"\n              }\n            ]\n          }\n        }\n      ]\n    }\n  }\n}",
+              "createdAt": "2026-07-28T02:02:49.000Z",
+              "updatedAt": "2026-07-28T02:02:49.000Z",
+              "uid": "35240-fac7b0a7-e786-48ea-99e1-203aaf4ccd78"
+            }
+          ],
+          "createdAt": "2026-07-28T02:02:49.000Z",
+          "updatedAt": "2026-07-28T02:02:49.000Z",
+          "uid": "35240-3f23dbf9-9cfd-4722-9a03-5c4e5e6ee17f"
+        },
+        {
+          "name": "Add tags to an album",
+          "id": "c447cf20-33cd-4444-b62a-fc3aded88143",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "sk",
+                  "type": "string"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "in",
+                  "value": "query",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/?method=album.addTags&artist=<string>&album=<string>&tags=<string>&api_key=<string>&api_sig=<string>&sk=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                ""
+              ],
+              "query": [
+                {
+                  "description": "(Required) ",
+                  "key": "method",
+                  "value": "album.addTags"
+                },
+                {
+                  "description": "(Required) The artist name.",
+                  "key": "artist",
+                  "value": "<string>"
+                },
+                {
+                  "description": "(Required) The album name.",
+                  "key": "album",
+                  "value": "<string>"
+                },
+                {
+                  "description": "(Required) A comma delimited list of user supplied tags to apply to this album. Accepts a maximum of 10 tags.",
+                  "key": "tags",
+                  "value": "<string>"
+                },
+                {
+                  "description": "(Required) A Last.fm API key.",
+                  "key": "api_key",
+                  "value": "<string>"
+                },
+                {
+                  "description": "(Required) A Last.fm method signature. See authentication.",
+                  "key": "api_sig",
+                  "value": "<string>"
+                },
+                {
+                  "description": "(Required) A session key generated by authenticating a user via the authentication API.",
+                  "key": "sk",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "Tag an album using a list of user supplied tags."
+          },
+          "response": [
+            {
+              "id": "1686f395-5af6-416a-acc9-931ed4fbe729",
+              "name": "Tags added successfully",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/?method=album.addTags&artist=<string>&album=<string>&tags=<string>&api_key=<string>&api_sig=<string>&sk=<API Key>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) ",
+                      "key": "method",
+                      "value": "album.addTags"
+                    },
+                    {
+                      "description": "(Required) The artist name.",
+                      "key": "artist",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) The album name.",
+                      "key": "album",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) A comma delimited list of user supplied tags to apply to this album. Accepts a maximum of 10 tags.",
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) A Last.fm API key.",
+                      "key": "api_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) A Last.fm method signature. See authentication.",
+                      "key": "api_sig",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "(Required) A session key generated by authenticating a user via the authentication API.",
+                      "key": "sk",
+                      "value": "<API Key>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"lfm\": {\n    \"status\": \"ok\"\n  }\n}",
+              "createdAt": "2026-07-28T02:02:49.000Z",
+              "updatedAt": "2026-07-28T02:02:49.000Z",
+              "uid": "35240-1686f395-5af6-416a-acc9-931ed4fbe729"
+            }
+          ],
+          "createdAt": "2026-07-28T02:02:49.000Z",
+          "updatedAt": "2026-07-28T02:02:49.000Z",
+          "uid": "35240-c447cf20-33cd-4444-b62a-fc3aded88143"
+        }
+      ],
+      "id": "df876a96-9677-4061-aca8-33fde4f38f38",
+      "createdAt": "2026-07-28T02:02:49.000Z",
+      "updatedAt": "2026-07-28T02:02:49.000Z",
+      "uid": "35240-df876a96-9677-4061-aca8-33fde4f38f38"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://ws.audioscrobbler.com/2.0"
+    }
+  ]
+}
